@@ -2,33 +2,61 @@
     <head>
         <meta charset="utf-8">
         <title Test User Form></title>
+        <style>
+            #answer {background-color: rgb(114, 248, 226);
+                     width: 200px;
+                     height: 200px;}
+
+        </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <h1>Test Test Test</h1>
-        <form id="#mainForm" method="post", action="/hello">
+        <form id="someForm" method="post", action="">
             <table>
-                <button id="button1">button1</button>
                 <tr>
-                    <td>{{ form.name.name }}</td>
-                    <td id="lalaname">{{ form.name }}</td>
+                    <td>{{ import_form.file_name.name }}</td>
+                    <td>{{ import_form.file_name }}</td>
                 </tr>
                 <tr>
-                    <td>{{ form.submit1 }}</td>
+                    <td>{{ import_form.submit1 }}</td>
+                </tr>
+                <tr>
+                    <td>{{ user_form.name.name }}</td>
+                    <td>{{ user_form.name }}</td>
+                </tr>
+                <tr>
+                    <td>{{ user_form.hobby.name }}</td>
+                    <td>{{ user_form.hobby}}</td>
+                </tr>
+                <tr>
+                    <td id="user">{{ user_form.submit2 }}</td>
+                </tr>
+                <tr>
+                    <td id="answer">{{ answer_form.answer }}</td>
                 </tr>
             </table>
         </form>
         <h3 id="result"></h3>
+        <button>button</button>
         <script>
             $(document).ready(function(){
-                $("#button1").click(function(e){
-                    e.preventDefault();
+                $("form").submit(function(){
                     $.ajax({
                         url: '/',
-                        type: 'POST',
-                        data = 'value=true',
-                        success: function(data){
-                            console.log(data)
+                        type: 'post',
+                        data: $("form").serialzie()
+                    });
+                });
+
+                $("button").click(function(){
+                    var data = $("form").serialize();
+                    $.ajax({
+                        url: '/save',
+                        type: 'post',
+                        data: data,
+                        success: function(){
+                            $("#result").text("File saved!")
                         }
                     });
                 });
