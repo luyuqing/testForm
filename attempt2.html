@@ -1,4 +1,4 @@
-<html>
+html>
     <head>
         <meta charset="utf-8">
         <title Test User Form></title>
@@ -6,12 +6,11 @@
     </head>
     <body>
         <h1>Test Test Test</h1>
-        <form id="#mainForm" method="post", action="/hello">
+        <form id="#mainForm" method="post", action="/">
             <table>
-                <button id="button1">button1</button>
                 <tr>
                     <td>{{ form.name.name }}</td>
-                    <td id="lalaname">{{ form.name }}</td>
+                    <td id="name">{{ form.name }}</td>
                 </tr>
                 <tr>
                     <td>{{ form.submit1 }}</td>
@@ -21,15 +20,13 @@
         <h3 id="result"></h3>
         <script>
             $(document).ready(function(){
-                $("#button1").click(function(e){
+                $("form").submit(function(e){
                     e.preventDefault();
-                    $.ajax({
-                        url: '/',
-                        type: 'POST',
-                        data = 'value=true',
-                        success: function(data){
-                            console.log(data)
-                        }
+                    var data = $("form input");
+                    $.each(data, function(i, item){
+                        if (item.name != "submit1"){
+                            $("#result").append(item.value);
+                        };
                     });
                 });
             });
